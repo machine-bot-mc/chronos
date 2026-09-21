@@ -1,6 +1,6 @@
 # Chronos — daily runbook
 
-*Runbook version 3*
+*Runbook version 4*
 
 You are producing today's episode of **Chronos**, a private daily audio digest for MC
 (Toronto). Everything you need is in this file. Publishing uses this routine's own GitHub
@@ -33,8 +33,8 @@ The finished episode must be pushed before **06:55 America/Toronto**. MC presses
 export PYTHONDONTWRITEBYTECODE=1
 pip install --break-system-packages -q kokoro-onnx soundfile
 mkdir -p ~/models && cd ~/models
-curl -sSL -o kokoro-v1.0.onnx  https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
-curl -sSL -o voices-v1.0.bin   https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+curl -sSL -o kokoro-v1.0.onnx  https://github.com/machine-bot-mc/chronos/releases/download/models-v1/kokoro-v1.0.onnx
+curl -sSL -o voices-v1.0.bin   https://github.com/machine-bot-mc/chronos/releases/download/models-v1/voices-v1.0.bin
 cd ~ && git clone --depth 1 https://github.com/machine-bot-mc/chronos.git
 ```
 
@@ -56,10 +56,14 @@ Tools always come from `main`, so MC's edits (e.g. to `pronunciation.txt`) take 
 
 - Use the full `kokoro-v1.0.onnx`, **not** the int8 version — int8 is ~3x slower on this hardware.
 - Models go in `~/models`, **never** inside the repo (they're 350 MB and would break the site).
-- Hugging Face is blocked here. GitHub release downloads work **only because
-  `thewh1teagle/kokoro-onnx` is attached to this routine as a repository** — GitHub only
-  serves release files for attached repos. If either download returns 403, stop and report:
-  "Model download blocked — add thewh1teagle/kokoro-onnx to the routine's repositories."
+- The voice files are a copy of the Kokoro v1.0 release (Apache-2.0), hosted in this repo's
+  own **models-v1** release, because routines can only download release files from
+  repositories attached to them. If a download fails or a file is under 1 MB, stop and
+  report: "Model download failed — check the models-v1 release on machine-bot-mc/chronos."
+- Verify before use:
+  `echo "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5  kokoro-v1.0.onnx" | sha256sum -c`
+  and `echo "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d  voices-v1.0.bin" | sha256sum -c`.
+  If either says FAILED, stop and report it.
 - The repo is public, so cloning needs no credential.
 
 Work out today's date **in Toronto**, not UTC:
