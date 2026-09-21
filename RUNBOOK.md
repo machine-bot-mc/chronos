@@ -1,8 +1,8 @@
 # Chronos — daily runbook
 
 You are producing today's episode of **Chronos**, a private daily audio digest for MC
-(Toronto). The scheduled task that started you supplies one secret: a GitHub token.
-Everything else you need is in this file. Work unattended — nobody is there to answer
+(Toronto). Everything you need is in this file. Publishing uses this routine's own GitHub
+connection — there is no token, and you must never ask for or handle one. Work unattended — nobody is there to answer
 questions. Make reasonable calls and record them in the final report.
 
 The finished episode must be pushed before **06:55 America/Toronto**. MC presses play at 7.
@@ -15,9 +15,9 @@ The finished episode must be pushed before **06:55 America/Toronto**. MC presses
    fetched today. Your training data is out of date — do not use it for facts, dates,
    people, prices or product details. If a source doesn't say something, the episode says
    it's unknown or leaves it out.
-2. **The token is secret.** Never print it, echo it, write it to any file, put it in a
-   commit, or include it in your report. Use it only inside the single `git push` command
-   in Step 6.
+2. **No credentials.** Push with plain `git push origin …`. The session's git proxy adds
+   the credential itself. Never put a token in a URL, file or command, and never try to
+   work around a push the proxy refuses — report it instead.
 3. **Zero cost.** No paid APIs, no sign-ups. Only: web search / fetch, pip, GitHub release
    downloads, git.
 4. **Scope.** One narrator, no dialogue, no web page, no new services. Do exactly the steps
@@ -36,10 +36,26 @@ curl -sSL -o voices-v1.0.bin   https://github.com/thewh1teagle/kokoro-onnx/relea
 cd ~ && git clone --depth 1 https://github.com/machine-bot-mc/chronos.git
 ```
 
+The repo has two branches. **`main`** holds the tools and this runbook — MC edits there.
+**`claude/publish`** holds the published site (episodes, scripts, feed) and is what GitHub
+Pages serves. Pull yesterday's published material into your working copy:
+
+```bash
+cd ~/chronos
+if git fetch -q --depth 1 origin claude/publish 2>/dev/null; then
+  for p in episodes scripts titles.json; do git checkout -q FETCH_HEAD -- "$p" 2>/dev/null || true; done
+  echo "restored published history"
+else
+  echo "first run: no claude/publish branch yet"
+fi
+```
+
+Tools always come from `main`, so MC's edits (e.g. to `pronunciation.txt`) take effect.
+
 - Use the full `kokoro-v1.0.onnx`, **not** the int8 version — int8 is ~3x slower on this hardware.
 - Models go in `~/models`, **never** inside the repo (they're 350 MB and would break the site).
 - Hugging Face is blocked here. GitHub release downloads work.
-- Clone anonymously — the repo is public. The token is only needed to push.
+- The repo is public, so cloning needs no credential.
 
 Work out today's date **in Toronto**, not UTC:
 
@@ -171,26 +187,26 @@ Sanity check before publishing:
 
 ## Step 6 — Publish
 
-History is squashed on every run so deleted episodes don't accumulate in git forever.
-Everything currently in the folder — including any edits MC made on GitHub — is kept.
+History is squashed on every run so deleted episodes don't pile up in git forever.
+Always push to **`claude/publish`** — branches starting `claude/` are always accepted by
+the routine's GitHub connection. Never push to `main`.
 
 ```bash
 cd ~/chronos
 git checkout -q --orphan publish
 git add -A
-git -c user.name="machine-bot-mc" -c user.email="machine-bot-mc@users.noreply.github.com" \
+git -c user.name="Chronos" -c user.email="machine-bot-mc@users.noreply.github.com" \
     -c commit.gpgsign=false commit -q -m "Chronos $TODAY"
-git push -q --force "https://x-access-token:${CHRONOS_TOKEN}@github.com/machine-bot-mc/chronos.git" publish:main
+git push -q --force origin publish:claude/publish
 ```
 
-(`CHRONOS_TOKEN` is set from the value in your task prompt. Set it with `export` in the
-same command as the push if your shell doesn't persist variables between calls.)
-
 If the push fails:
-- **401 / 403 / "Invalid username or token"** → the token has expired or been revoked.
-  Stop. Report: "Token rejected — MC needs to create a new one and paste it into the task."
-- **Anything else** → retry once after 30 seconds, then stop and report the error text
-  (with the token removed).
+- **"not in this session's authorized repository set"** → the repository isn't attached to
+  this routine. Stop. Report: "Push blocked — machine-bot-mc/chronos needs to be added to
+  the routine's repositories at claude.ai/code/routines."
+- **Authentication or permission error from GitHub** → the routine's GitHub connection is
+  missing or lacks access. Stop and report the error text.
+- **Anything else** → retry once after 30 seconds, then stop and report the error text.
 
 ---
 
@@ -198,8 +214,8 @@ If the push fails:
 
 ```bash
 sleep 20
-git ls-remote https://github.com/machine-bot-mc/chronos.git main
-curl -sS https://raw.githubusercontent.com/machine-bot-mc/chronos/main/feed.xml | grep -c "chronos-$TODAY.mp3"
+git ls-remote https://github.com/machine-bot-mc/chronos.git claude/publish
+curl -sS https://raw.githubusercontent.com/machine-bot-mc/chronos/refs/heads/claude/publish/feed.xml | grep -c "chronos-$TODAY.mp3"
 ```
 
 The second command should print `1` or more. (`*.github.io` itself is blocked from this
@@ -211,5 +227,3 @@ environment, so verify via raw.githubusercontent.com — that's expected, not an
 - The three story headlines and their sources
 - Anything you left out or flagged as unknown, and why
 - Any problem MC should know about
-
-Never include the token in the report.
