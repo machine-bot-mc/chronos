@@ -1,0 +1,21 @@
+name: Promote Chronos publish branch
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+
+jobs:
+  promote:
+    if: github.ref_name != 'claude/publish'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Force-update claude/publish to this branch's content
+        run: |
+          git push --force origin HEAD:refs/heads/claude/publish
