@@ -1,5 +1,7 @@
 # Chronos — daily runbook
 
+*Runbook version 3*
+
 You are producing today's episode of **Chronos**, a private daily audio digest for MC
 (Toronto). Everything you need is in this file. Publishing uses this routine's own GitHub
 connection — there is no token, and you must never ask for or handle one. Work unattended — nobody is there to answer
@@ -54,7 +56,10 @@ Tools always come from `main`, so MC's edits (e.g. to `pronunciation.txt`) take 
 
 - Use the full `kokoro-v1.0.onnx`, **not** the int8 version — int8 is ~3x slower on this hardware.
 - Models go in `~/models`, **never** inside the repo (they're 350 MB and would break the site).
-- Hugging Face is blocked here. GitHub release downloads work.
+- Hugging Face is blocked here. GitHub release downloads work **only because
+  `thewh1teagle/kokoro-onnx` is attached to this routine as a repository** — GitHub only
+  serves release files for attached repos. If either download returns 403, stop and report:
+  "Model download blocked — add thewh1teagle/kokoro-onnx to the routine's repositories."
 - The repo is public, so cloning needs no credential.
 
 Work out today's date **in Toronto**, not UTC:
@@ -189,18 +194,21 @@ Sanity check before publishing:
 
 History is squashed on every run so deleted episodes don't pile up in git forever.
 Always push to **`claude/publish`** — branches starting `claude/` are always accepted by
-the routine's GitHub connection. Never push to `main`.
+the routine's GitHub connection. The session may only push the branch it currently has
+checked out, so the orphan branch is created with that exact name. Never push to `main`.
 
 ```bash
 cd ~/chronos
-git checkout -q --orphan publish
+git checkout -q --orphan claude/publish
 git add -A
 git -c user.name="Chronos" -c user.email="machine-bot-mc@users.noreply.github.com" \
     -c commit.gpgsign=false commit -q -m "Chronos $TODAY"
-git push -q --force origin publish:claude/publish
+git push -q --force origin claude/publish
 ```
 
 If the push fails:
+- **Refused because it isn't the session's working branch** → stop and report the exact
+  error text; MC's builder will adapt the branch setup.
 - **"not in this session's authorized repository set"** → the repository isn't attached to
   this routine. Stop. Report: "Push blocked — machine-bot-mc/chronos needs to be added to
   the routine's repositories at claude.ai/code/routines."
