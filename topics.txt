@@ -9,10 +9,10 @@
 # - Lines starting with # are ignored.
 # - Delete this whole file to go back to personal AI every day.
 
-Monday    | Professional sports  | last 3 days   | The weekend's results and biggest storylines. General coverage of the major North American leagues; only sports that are in season.
+Monday    | Professional sports  | last 7 days   | The weekend's results and biggest storylines. General coverage of the major North American leagues (MLB, NBA, PGA, NFL); only sports that are in season.
 Tuesday   | Business             | last 90 days  | Companies, deals, strategy and market shifts that matter beyond the daily noise, with a Canadian angle where there is one. Developments, not stock tips.
-Wednesday | Personal AI          | last 7 days   | Personal AI use cases around home, work and family: what automation opportunities are coming to light in daily life.
-Thursday  | Health               | last 12 months | New research and what it actually shows: study size, whether it was in people, and how strong the evidence is. No personal medical advice.
+Wednesday | Health               | last 12 months | New research and what it actually shows: study size, whether it was in people, and how strong the evidence is. No personal medical advice.
+Thursday  | Personal AI          | last 7 days   | Personal AI use cases around home, work and family: what automation opportunities are coming to light in daily life.
 Friday    | International news   | last 7 days   | The biggest world stories of the week, from wire services and established outlets, with more than one side where a story is contested.
 Saturday  | Fascinating facts    | any time      | Three or four surprising, verified facts around one theme. Every fact traced to a reputable source. No popular myths.
 Sunday    | Book reviews         | last 3 years  | One or two notable books: what they're about and what named critics said. Short quotes only, no spoilers, and never my own opinion dressed up as a review.
