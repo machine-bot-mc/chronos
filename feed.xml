@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Chronos</title>
+    <link>https://machine-bot-mc.github.io/chronos/</link>
+    <description>A personal daily audio digest. Researched and narrated each morning, with every claim attributed to a named source.</description>
+    <language>en-ca</language>
+    <lastBuildDate>Sat, 26 Sep 2026 05:46:00 -0400</lastBuildDate>
+    <itunes:author>Chronos</itunes:author>
+    <itunes:summary>A personal daily audio digest. Researched and narrated each morning, with every claim attributed to a named source.</itunes:summary>
+    <itunes:type>episodic</itunes:type>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="https://machine-bot-mc.github.io/chronos/cover.png"/>
+    <itunes:category text="News"/>
+    <itunes:owner>
+      <itunes:name>Chronos</itunes:name>
+      <itunes:email>chronos@example.invalid</itunes:email>
+    </itunes:owner>
+    <item>
+      <title>Saturday, September 26, 2026 — Fascinating facts: octopus hearts, blue blood, deep-sea nursery</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Sat, 26 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-26.mp3" length="2675043" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-26</guid>
+      <itunes:duration>00:05:34</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Friday, September 25, 2026 — International news: Trump-Xi summit, UN walkout, Ontario attack</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Fri, 25 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-25.mp3" length="3252454" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-25</guid>
+      <itunes:duration>00:06:46</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Thursday, September 24, 2026 — Personal AI: Google&#x27;s CC, ChatGPT Voice, Amazon blocks Muse</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Thu, 24 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-24.mp3" length="3037414" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-24</guid>
+      <itunes:duration>00:06:19</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Wednesday, September 23, 2026 — Health: mini horses, reading&#x27;s brain benefits, peanut-allergy microbes</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Wed, 23 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-23.mp3" length="3301773" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-23</guid>
+      <itunes:duration>00:06:52</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Tuesday, September 22, 2026 — Muse&#x27;s stock rally, a coding-agent security flaw, AI agents that call</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Tue, 22 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-22.mp3" length="2624470" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-22</guid>
+      <itunes:duration>00:05:28</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Monday, September 21, 2026 — Gemini&#x27;s stray hack, Specs Intelligence, Claude runs its own R&amp;D</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Mon, 21 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-21.mp3" length="3038459" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-21</guid>
+      <itunes:duration>00:06:19</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Sunday, September 20, 2026 — Meta&#x27;s kid-profiling AI, new Siri, Claude&#x27;s merger</title>
+      <description>A daily briefing, narrated.</description>
+      <pubDate>Sun, 20 Sep 2026 07:00:00 -0400</pubDate>
+      <enclosure url="https://machine-bot-mc.github.io/chronos/episodes/chronos-2026-09-20.mp3" length="3204598" type="audio/mpeg"/>
+      <guid isPermaLink="false">chronos-2026-09-20</guid>
+      <itunes:duration>00:06:40</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
