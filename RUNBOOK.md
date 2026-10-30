@@ -1,6 +1,6 @@
 # Chronos — daily runbook
 
-*Runbook version 4 · revision 5 (weekly topic schedule)*
+*Runbook version 4 · revision 6 (weekly topic schedule, failure alerts)*
 
 You are producing today's episode of **Chronos**, a private daily audio digest for MC
 (Toronto). Everything you need is in this file. Publishing uses this routine's own GitHub
@@ -24,6 +24,14 @@ The finished episode must be pushed before **06:55 America/Toronto**. MC presses
    downloads, git.
 4. **Scope.** One narrator, no dialogue, no web page, no new services. Do exactly the steps
    below.
+5. **Never fail quietly.** MC only finds out about a broken morning if you tell him. Any time
+   you stop early, publish nothing, or finish without today's episode live in the feed, send a
+   push notification before you end the run — see Step 8. A run that ends with only a written
+   report is a run MC never sees.
+6. **Never overwrite a published day.** After Step 1, check whether
+   `episodes/chronos-$TODAY.mp3` already exists in the restored history. If it does, today's
+   episode has already been published: stop, publish nothing, and notify per Step 8 saying so.
+   Re-recording would replace the audio MC already heard and the permanent script record.
 
 ---
 
@@ -291,6 +299,19 @@ curl -sS https://raw.githubusercontent.com/machine-bot-mc/chronos/refs/heads/cla
 The second command should print `1` or more. (`*.github.io` itself is blocked from this
 environment, so verify via raw.githubusercontent.com — that's expected, not an error.)
 
+If it prints `0`, the episode is **not** live no matter what the earlier steps said: treat the
+run as failed and notify per Step 8.
+
+Also check the published feed for gaps, which is how a silent outage shows up:
+
+```bash
+curl -sS https://raw.githubusercontent.com/machine-bot-mc/chronos/refs/heads/claude/publish/feed.xml \
+  | grep -o 'chronos-[0-9-]*</guid>' | head -5
+```
+
+If any of the previous three days is missing from that list, say so in the report and include it
+in the notification — earlier runs failed without anyone noticing.
+
 **Final report** — keep it short:
 - ✅ or ❌ published
 - Today's title, narrator, runtime
@@ -298,3 +319,32 @@ environment, so verify via raw.githubusercontent.com — that's expected, not an
 - The headlines (or facts / books) and their sources
 - Anything you left out or flagged as unknown, and why
 - Any problem MC should know about
+
+---
+
+## Step 8 — Alert MC when something goes wrong
+
+The written report stays in a session nobody reads. A notification reaches MC's phone and inbox,
+so it is the only part of a failed run that actually arrives.
+
+**Send a push notification whenever any of these is true:**
+
+- You stopped at one of the guard conditions (missing tool files, old runbook, model download
+  or checksum failure, today's episode already published).
+- The push failed for any reason, including the proxy refusing the repository.
+- Step 7 could not confirm today's episode in the live feed.
+- The episode published, but the feed is missing one or more of the previous three days.
+- You had to make a judgement call MC would want to know about (fallback topic, a thin episode,
+  a topic line you could not follow).
+
+Put the summary inside `<routine_summary>` tags. First sentence is the phone banner, so lead
+with what is broken and what it blocks. Then give the detail he needs to fix it without opening
+the session: the exact error text, which step it came from, and the one action that fixes it.
+
+**Stay silent on a clean run.** If today's episode is live in the feed and nothing above applies,
+send nothing — a daily "all good" ping trains him to ignore the alerts that matter.
+
+**Known fix for the most common failure:** a push refused with "not in this session's authorized
+repository set" means the repository is no longer attached to the routine. The fix is to re-add
+`machine-bot-mc/chronos` to the routine's sources at claude.ai/code/routines. Nothing in the
+repo or the runbook can work around it, so don't try — notify and stop.
