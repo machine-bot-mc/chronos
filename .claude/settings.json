@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 render.py:*)",
+      "Bash(python3 make_feed.py)"
+    ]
+  }
+}
