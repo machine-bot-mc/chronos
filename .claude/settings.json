@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 render.py:*)",
+      "Bash(python3 render.py work/script.txt work/episode.wav)",
       "Bash(python3 make_feed.py)"
     ]
   }
