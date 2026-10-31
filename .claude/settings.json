@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(python3 render.py work/script.txt work/episode.wav)",
-      "Bash(python3 make_feed.py)"
+      "Bash(python3 make_feed.py)",
+      "Bash(git push -q --force origin claude/publish)",
+      "Bash(git push --force origin claude/publish)"
     ]
   }
 }
