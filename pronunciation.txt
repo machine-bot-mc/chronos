@@ -1,0 +1,12 @@
+# Chronos pronunciation fixes
+# One rule per line:  written form  =>  what to feed the narrator
+# Lines starting with # are notes. Matching ignores case but keeps word boundaries.
+# Add a line here any time MC reports a mangled word.
+
+# --- Reported by MC, 2026-09-18 ---
+Uber => Oober
+# "Uber" was read as "YOO-ber". "Oober" gives the correct "OO-ber".
+
+# --- Notes on rules handled automatically in code, no line needed here ---
+# Dotted initialisms (A.I., C.C., P.D.F.) are collapsed to AI, CC, PDF before speaking.
+# The periods made the narrator stop between each letter. Without them the letters run together.
